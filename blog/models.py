@@ -1,6 +1,7 @@
+from django.contrib.auth.models import User
 from django.db import models
 from django.utils import timezone
-from django.contrib.auth.models import User
+from django.urls import reverse
 
 
 class PublishedManager(models.Manager):
@@ -34,7 +35,7 @@ class Post(models.Model):
 	status 	= models.CharField(max_length=10, choices=STATUS_CHOICES, default='draft')
 
 	# The default manager named objects renamed to posts. Multiple managers can be created.
-	# Usage: Posts.posts.all()
+	# Usage: Post.posts.all()
 	# posts = models.Manager()
 	
 	# Usage: Post.objects.active_author_posts()
@@ -47,4 +48,9 @@ class Post(models.Model):
 
 	def __str__(self):
 		return self.title
+
+	def get_absolute_url(self):
+		# Canonical URL for an object
+		# Usage: <a href="{{ object.get_absolute_url }}">{{ object.name }}</a>
+		return reverse('blog:post_detail', args=[self.publish.year, self.publish.month, self.publish.day, self.slug])
 

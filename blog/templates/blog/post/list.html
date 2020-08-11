@@ -1,0 +1,14 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+
+				{% for post in posts %}
+				<div class="blog-post">
+					<h2 class="blog-post-title"><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h2>
+					<p class="blog-post-meta">{{ post.publish|date:"jS F, Y" }} by <a href="#">{{ post.author|capfirst }}</a></p>
+
+					<p>{{ post.body|truncatewords:30|linebreaks }}</p>
+				</div><!-- /.blog-post -->
+				{% endfor %}
+
+{% endblock %}
